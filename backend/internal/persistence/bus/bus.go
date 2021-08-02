@@ -35,13 +35,26 @@ func (r *Routes) Get(routeTime string) map[int]string {
 	routeMap := make(map[int]string)
 	twelveHourLayout := "03:04PM"
 
+	newRouteTime, _ := time.Parse(twelveHourLayout, routeTime)
+
 	routeSchedule0 := r.RouteSchedule[0]
-	routeMap[0] = routeSchedule0.Format(twelveHourLayout)
-
 	routeSchedule1 := r.RouteSchedule[1]
-	routeMap[1] = routeSchedule1.Format(twelveHourLayout)
-
 	routeSchedule2 := r.RouteSchedule[2]
+
+	diff := routeSchedule0.Sub(newRouteTime)
+
+	// FIXME: may need a limit on this so it doesnt go forever
+	for diff < 0 {
+		// add 15 mins to each schedule
+		routeSchedule0 = routeSchedule0.Add(time.Minute * 15)
+		routeSchedule1 = routeSchedule1.Add(time.Minute * 15)
+		routeSchedule2 = routeSchedule2.Add(time.Minute * 15)
+
+		diff = routeSchedule0.Sub(newRouteTime)
+	}
+
+	routeMap[0] = routeSchedule0.Format(twelveHourLayout)
+	routeMap[1] = routeSchedule1.Format(twelveHourLayout)
 	routeMap[2] = routeSchedule2.Format(twelveHourLayout)
 
 	return routeMap

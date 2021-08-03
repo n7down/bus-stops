@@ -48,9 +48,13 @@ func (a *BusRoutesAPI) GetRoute(c *gin.Context) {
 	routes := a.persistence.GetRoutes(req.Stop, req.Time)
 
 	res = responses.GetRoutesResponse{
-		Route0: routes.Route0,
 		Route1: routes.Route1,
 		Route2: routes.Route2,
+		Route3: routes.Route3,
+
+		NextRoute1: routes.NextRoute1,
+		NextRoute2: routes.NextRoute2,
+		NextRoute3: routes.NextRoute3,
 	}
 
 	c.JSON(http.StatusOK, res)

@@ -1,4 +1,4 @@
-package bus
+package stopsmock
 
 import (
 	"fmt"
@@ -25,35 +25,35 @@ func TestGetStops(t *testing.T) {
 		expectedRoute2 string
 	}{
 		{
-			0,
+			1,
 			"12:00AM",
 			"12:00AM",
 			"12:02AM",
 			"12:04AM",
 		},
 		{
-			1,
+			2,
 			"12:02AM",
 			"12:02AM",
 			"12:04AM",
 			"12:06AM",
 		},
 		{
-			2,
+			3,
 			"12:04AM",
 			"12:04AM",
 			"12:06AM",
 			"12:08AM",
 		},
 		{
-			3,
+			4,
 			"12:06AM",
 			"12:06AM",
 			"12:08AM",
 			"12:10AM",
 		},
 		{
-			4,
+			5,
 			"12:08AM",
 			"12:08AM",
 			"12:10AM",
@@ -62,10 +62,10 @@ func TestGetStops(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		actualRouteMap := stops.Get(test.stop, test.stopTime)
-		assert.Equal(t, test.expectedRoute0, actualRouteMap[0], fmt.Sprintf("%v should be %v", actualRouteMap[0], test.expectedRoute0))
-		assert.Equal(t, test.expectedRoute1, actualRouteMap[1], fmt.Sprintf("%v should be %v", actualRouteMap[1], test.expectedRoute1))
-		assert.Equal(t, test.expectedRoute2, actualRouteMap[2], fmt.Sprintf("%v should be %v", actualRouteMap[2], test.expectedRoute2))
+		actualRoutes := stops.GetRoutes(test.stop, test.stopTime)
+		assert.Equal(t, test.expectedRoute0, actualRoutes.Route0, fmt.Sprintf("%v should be %v", actualRoutes.Route0, test.expectedRoute0))
+		assert.Equal(t, test.expectedRoute1, actualRoutes.Route1, fmt.Sprintf("%v should be %v", actualRoutes.Route1, test.expectedRoute1))
+		assert.Equal(t, test.expectedRoute2, actualRoutes.Route2, fmt.Sprintf("%v should be %v", actualRoutes.Route2, test.expectedRoute2))
 	}
 }
 
@@ -79,28 +79,28 @@ func TestGetStopsByFindingTheNextStop(t *testing.T) {
 		expectedRoute2 string
 	}{
 		{
-			0,
+			1,
 			"12:00AM",
 			"12:00AM",
 			"12:02AM",
 			"12:04AM",
 		},
 		{
-			0,
+			1,
 			"12:01AM",
 			"12:15AM",
 			"12:17AM",
 			"12:19AM",
 		},
 		{
-			0,
+			1,
 			"03:01PM",
 			"03:15PM",
 			"03:17PM",
 			"03:19PM",
 		},
 		{
-			1,
+			2,
 			"12:03AM",
 			"12:17AM",
 			"12:19AM",
@@ -109,9 +109,9 @@ func TestGetStopsByFindingTheNextStop(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		actualRouteMap := stops.Get(test.stop, test.stopTime)
-		assert.Equal(t, test.expectedRoute0, actualRouteMap[0], fmt.Sprintf("%v should be %v", actualRouteMap[0], test.expectedRoute0))
-		assert.Equal(t, test.expectedRoute1, actualRouteMap[1], fmt.Sprintf("%v should be %v", actualRouteMap[1], test.expectedRoute1))
-		assert.Equal(t, test.expectedRoute2, actualRouteMap[2], fmt.Sprintf("%v should be %v", actualRouteMap[2], test.expectedRoute2))
+		actualRoutes := stops.GetRoutes(test.stop, test.stopTime)
+		assert.Equal(t, test.expectedRoute0, actualRoutes.Route0, fmt.Sprintf("%v should be %v", actualRoutes.Route0, test.expectedRoute0))
+		assert.Equal(t, test.expectedRoute1, actualRoutes.Route1, fmt.Sprintf("%v should be %v", actualRoutes.Route1, test.expectedRoute1))
+		assert.Equal(t, test.expectedRoute2, actualRoutes.Route2, fmt.Sprintf("%v should be %v", actualRoutes.Route2, test.expectedRoute2))
 	}
 }

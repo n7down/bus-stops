@@ -117,6 +117,8 @@ class App extends React.Component {
         diff = timeEnd.diff(startDate);
         diffDuration = moment.duration(diff);
         var stop2NextRoute3Minutes = parseInt(diffDuration.asMinutes())%60;
+        console.log(stop2NextRoute3Minutes)
+        console.log(isNaN(stop2NextRoute3Minutes))
 
         return (
             <div className="card text-center m-3">
@@ -139,8 +141,8 @@ class App extends React.Component {
 class Timer extends React.Component {
   constructor(props) {
     super(props);
-    console.log(String(this.props.secs))
-    this.state = { time: {}, seconds: Number(this.props.secs) };
+    // console.log(String(this.props.secs))
+    this.state = { time: {}, seconds: this.props.secs };
     this.timer = 0;
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);

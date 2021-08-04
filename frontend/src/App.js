@@ -125,13 +125,13 @@ class App extends React.Component {
                 <h4 className="card-header">{currentTime}</h4>
                 <div className="card-body">
                     <p>Stop 1</p>
-                    <p>Route 1 in {stop1Route1Minutes} mins and {stop1NextRoute1Minutes} mins</p>
-                    <p>Route 2 in {stop1Route2Minutes} mins and {stop1NextRoute2Minutes} mins</p>
-                    <p>Route 3 in {stop1Route3Minutes} mins and {stop1NextRoute3Minutes} mins</p>
+                    <p>Route 1 {!!stop1Route1Minutes && <Timer secs={stop1Route1Minutes * 60} />} and {!!stop1NextRoute1Minutes && <Timer secs={stop1NextRoute1Minutes * 60} />} </p>
+                    <p>Route 2 in {!!stop1Route2Minutes && <Timer secs={stop1Route2Minutes * 60} />} and {!!stop1NextRoute2Minutes && <Timer secs={stop1NextRoute2Minutes *60} />} </p>
+                    <p>Route 3 in {!!stop1Route3Minutes && <Timer secs={stop1Route3Minutes * 60} />} and {!!stop1NextRoute3Minutes && <Timer secs={stop1NextRoute3Minutes * 60} />} </p>
                     <p>Stop 2</p>
-                    <p>Route 1 in {stop2Route1Minutes} mins and {stop2NextRoute1Minutes} mins</p>
-                    <p>Route 2 in {stop2Route2Minutes} mins and {stop2NextRoute2Minutes} mins</p>
-                    <p>Route 3 in {stop2Route3Minutes} mins and {stop2NextRoute3Minutes} mins</p>
+                    <p>Route 1 in {!!stop2Route1Minutes && <Timer secs={stop2Route1Minutes * 60} />} and {!!stop2NextRoute1Minutes && <Timer secs={stop2NextRoute1Minutes * 60} />} </p>
+                    <p>Route 2 in {!!stop2Route2Minutes && <Timer secs={stop2Route2Minutes * 60} />} and {!!stop2NextRoute2Minutes && <Timer secs={stop2NextRoute2Minutes} />} </p>
+                    <p>Route 3 in {!!stop2Route3Minutes && <Timer secs={stop2Route3Minutes * 60} />} and {!!stop2NextRoute3Minutes && <Timer secs={stop2NextRoute3Minutes * 60} />} </p>
                 </div>
             </div>
         );
@@ -141,7 +141,6 @@ class App extends React.Component {
 class Timer extends React.Component {
   constructor(props) {
     super(props);
-    // console.log(String(this.props.secs))
     this.state = { time: {}, seconds: this.props.secs };
     this.timer = 0;
     this.startTimer = this.startTimer.bind(this);
@@ -166,9 +165,9 @@ class Timer extends React.Component {
   }
 
   componentDidMount() {
-    let timeLeftVar = this.secondsToTime(this.state.seconds);
-    this.setState({ time: timeLeftVar });
-    this.startTimer()
+        let timeLeftVar = this.secondsToTime(this.state.seconds);
+        this.setState({ time: timeLeftVar });
+        this.startTimer()
   }
 
   startTimer() {
@@ -194,7 +193,7 @@ class Timer extends React.Component {
   render() {
     return(
       <div>
-        m: {this.state.time.m} s: {this.state.time.s}
+        {this.state.time.m} mins
       </div>
     );
   }
